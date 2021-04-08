@@ -1,0 +1,17 @@
+(* Check this: https://stackoverflow.com/questions/50595106/how-to-import-from-another-file-in-sml-with-a-path-relative-to-the-importer *)
+
+group
+    source(-)
+
+    structure Main
+    structure Parser
+is
+    (* SML standard library*)
+    $/basis.cm
+
+    (* SML/NJ library*)
+    $/smlnj-lib.cm
+
+    (* all source files to be considered *)
+    src/parser.sml
+    src/main.sml
