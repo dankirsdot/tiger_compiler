@@ -1,0 +1,3 @@
+string str = "Hello from ML";
+int a = 5;
+bool flag = true;
