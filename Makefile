@@ -14,12 +14,13 @@ clean:
 	rm -f $(TIGER_HEAP)
 	rm -Rf .cm
 
-.PHONY: install
-install: $(TIGER_HEAP)
-	cp $(TIGER_HEAP) $(SMLNJ_HOME).heap
-	(cd $(SMLNJ_HOME) ; ln -s .run-sml tiger)
-
 .PHONY: uninstall
 uninstall:
 	rm -f $(SMLNJ_HOME).heap/$(TIGER_HEAP)
 	rm -f $(SMLNJ_HOME)tiger
+
+.PHONY: install
+install: uninstall $(TIGER_HEAP)
+	cp $(TIGER_HEAP) $(SMLNJ_HOME).heap
+	(cd $(SMLNJ_HOME) ; ln -s .run-sml tiger)
+
