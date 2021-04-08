@@ -7,12 +7,15 @@ TIGER_HEAP := tiger.$(SMLNJ_HEAP_SUFFIX)
 all: $(TIGER_HEAP)
 
 $(TIGER_HEAP): $(TIGER_CM)
-	rm -f $(TIGER_HEAP)
 	ml-build $(TIGER_CM) Main.main
+
+.PHONY: clean
+clean:
+	rm -f $(TIGER_HEAP)
+	rm -Rf .cm
 
 .PHONY: install
 install: $(TIGER_HEAP)
-	rm -f $(SMLNJ_HOME).heap/$(TIGER_HEAP) $(SMLNJ_HOME)tiger
 	cp $(TIGER_HEAP) $(SMLNJ_HOME).heap
 	(cd $(SMLNJ_HOME) ; ln -s .run-sml tiger)
 
@@ -20,8 +23,3 @@ install: $(TIGER_HEAP)
 uninstall:
 	rm -f $(SMLNJ_HOME).heap/$(TIGER_HEAP)
 	rm -f $(SMLNJ_HOME)tiger
-
-.PHONY: clean
-clean:
-	rm -f $(TIGER_HEAP)
-	rm -Rf .cm
