@@ -1,0 +1,2 @@
+val infile = "./input.txt" ;
+print(infile^"\n");
