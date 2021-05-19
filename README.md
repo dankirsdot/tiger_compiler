@@ -14,6 +14,12 @@ _sources.cm_ - A "makefile" for the ML Compilation Manager -
 
 use in cmd:
 
->SML -> CM.make("sourses".cm); -> Parse.parse "test.tig";
+>SML -> CM.make("sourses".cm); 
 
-After that you will get tiger.lex.sml - our lexer 
+After that you will get tiger.lex.sml - our lexer
+
+Ask Parse structure for check lexer's work:
+
+> Parse.parse "test.tig";
+
+ 
