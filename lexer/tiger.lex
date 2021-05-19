@@ -68,4 +68,3 @@ comment=\/\*.*\*\/;
 {comment} => (continue());
 {space} => (continue());
 .       => (ErrorMsg.error yypos ("illegal character " ^ yytext); continue());
-
