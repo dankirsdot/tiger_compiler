@@ -6,6 +6,17 @@ fun is_space ch =
 		true
 	else 
 		false
+
+fun concat_string_list(strings):string = 
+	if (List.length(strings) = 0) then
+		""
+	else
+	(let
+		val st = List.nth(strings, 0);
+	in
+		st^concat_string_list(List.rev(List.take((List.rev(strings)), (List.length(strings) - 1))))
+	end)
+
 (*
 	Returns 0 if item is found 
 	or end of the list is reached
@@ -26,28 +37,10 @@ fun get_item_index (mylist, item) =
 		print("\nReturned value: "^(Int.toString returned));
 		1 + returned
 	end)
-				
 
-(*
-	Takes a list of chars
-	Recursively surfes it until the first " "
-	Returns a char list without the first string
-*)
-(* fun remove_first_string chrs : char list =
-	if ((is_space (List.nth(chrs, 0)))) then 
-		chrs
-	else
-		(let
-			val item = List.nth(chrs, 0)
-		in
-			(* recursion on the rest of the list *)
-			remove_first_string(List.rev(List.take((List.rev(chrs)), (List.length(chrs) - 1))))
-		end) *)
-
-(*
-	Takes a list of chars
-	Recursively surfes it until the first " "
-	Returns a string
+(* 
+	Splits an input string
+	by " " into a list of strings
 *)
 fun get_strings strings : string list =
 	(let
@@ -55,8 +48,6 @@ fun get_strings strings : string list =
 		val string_as_char_array = explode(strings);
 		val space_index = get_item_index(string_as_char_array, #" ");
 	in
-		print("\n" ^ (Int.toString space_index) ^ "\n");
-		print("\n" ^ (Int.toString string_length) ^ "\n");
 		if (space_index <= string_length) then
 			(let
 				val subst = substring(strings, 0, space_index);
@@ -64,8 +55,6 @@ fun get_strings strings : string list =
 				if (space_index = string_length) then
 					(let
 					in
-						print("\nString: " ^ strings ^ "\n");
-						print("\nSubstring: " ^ subst ^ "\n");
 						if (subst = " " orelse subst = "") then 
 							List.take([""], 0)
 						else
@@ -76,10 +65,6 @@ fun get_strings strings : string list =
 						val index_after_space = space_index+1;
 						val rest_subst = substring(strings, index_after_space, string_length - index_after_space);
 					in
-						print("\n" ^ (Int.toString index_after_space) ^ "\n");
-						print("\nRest substring: " ^ rest_subst ^ "\n");
-						print("\nString: " ^ strings ^ "\n");
-						print("\nSubstring: " ^ subst ^ "\n");
 						if (subst = " " orelse subst = "") then 
 							get_strings(rest_subst)
 						else
@@ -90,8 +75,10 @@ fun get_strings strings : string list =
 		else
 			List.take([""], 0)
 	end)
-
-fun show list : string list = 
+(* 
+	Surves through a list of strings
+	with a function given *)
+(* fun show list wat : string list = 
 	if (List.length(list)) = 0 then 
 		List.take([""], 0)
 	else
@@ -100,34 +87,10 @@ fun show list : string list =
 		val chrs = explode(str);
 		val pure_chrs = delete( #"\n", (delete(#"\t", chrs)));
 		val str = String.implode(pure_chrs);
-
-		(* val new_str = get_first_string(pure_chrs); *)
-
 		in
-		(* print(str^"\n"); *)
-		(* print(new_str^"\n"); *)
-		(* chrs_list_lexem_split(pure_chrs);		 *)
-
-			(* recursion on the rest of the list *)
-		get_strings(str) @ show(List.rev(List.take((List.rev(list)), (List.length(list) - 1))))
-		end)
-
-(* (*
-	Returns a list of strings from one single string
-*)
-fun chrs_list_lexem_split chrs : string list = 
-	if (is_space List.nth(chrs, 0)) then
-		List.take([""], 0)
-	else
-		(let	
-		val chrs_item_as_str =  String.str(List.nth(chrs, 0));
-
-		in
-		print(chrs_item_as_str);
-		chrs_list_lexem_split(List.rev(List.take((List.rev(list)), (List.length(list) - 1))))
+		(* recursion on the rest of the list *)
+		(wat(str)) @ show(List.rev(List.take((List.rev(list)), (List.length(list) - 1))))
 		end) *)
-
-
 
 val infile = "./input.tig" ;
 
@@ -164,7 +127,10 @@ print( (List.nth(k, 0) ) ^ "\n" ); *)
 (* show pureGraph; *)
 
 val str = List.nth(pureGraph, 0);
-show pureGraph;
+val f = concat_string_list(pureGraph);
+print("\n"^f^"\n");
+(* fun got func mylist func = show(pureGraph, get_strings);
+got show pureGraph get_strings *)
 
 
 
