@@ -1,6 +1,6 @@
 "this is string literal"
 let  /* The eight queens solver from Appel */
-	var N := 8type intArray = array of int
+	var N := 8type      intArray = array of int
 	var row := intArray [ N ] of 0
 	var col := intArray [ N ] of 0
 	var diag1 := intArray [ N+N-1 ] of 0
