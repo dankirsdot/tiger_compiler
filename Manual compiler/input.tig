@@ -1,3 +1,4 @@
+"this is string literal"
 let  /* The eight queens solver from Appel */
 	var N := 8type intArray = array of int
 	var row := intArray [ N ] of 0
