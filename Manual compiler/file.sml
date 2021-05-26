@@ -62,16 +62,21 @@ fun readlist (infile : string) =
 		loop ins before TextIO.closeIn ins
 	end ;
 
-type lexem_entry = {lexem:string, lexem_line:int, lexem_pos:int};
+type lexem_entry = {lexem_type:string, lexem:string, lexem_line:int, lexem_pos:int};
 
 
+(*
+	Note. argument is a list.
+	If need to print only 1 lexem,
+	need to pass a 1 value list
+*)
 fun print_lexems (lexems) = 
 	if(List.length(lexems) = 0) then
 		0 (* unnesessary return value to stop the recursion*)
 	else
 		(let
 			val entry:lexem_entry = List.nth(lexems, 0);
-			val entry_string = "\""^(#lexem entry)^"\" : " ^ (Int.toString (#lexem_line entry)) ^ " _ " ^ (Int.toString (#lexem_pos entry));
+			val entry_string = "{ " ^ (#lexem_type entry) ^ " : \""^(#lexem entry) ^ "\" : " ^ (Int.toString (#lexem_line entry)) ^ " _ " ^ (Int.toString (#lexem_pos entry)) ^ " }";
 		in
 			print(entry_string^"\n");
 			print_lexems(List.drop(lexems, 1))
@@ -167,36 +172,54 @@ fun get_id_or_keyword(chs) =
 			else 
 				""
 		end)
+
+(* 
+	Assembles and returns consequtive digits as a string
+ *)
+fun get_number(chs) = 
+	if (List.length(chs) = 0) then
+		""
+	else 
+		(let
+			val ch = List.nth(chs, 0);
+		in
+			if (is_digit ch) then
+				String.str(ch) ^ get_id_or_keyword(List.drop(chs, 1))
+			else 
+				""
+		end)
 (* 
 	Returns the first lexem as a string
  *)
 fun get_lexem(chs : char list) = 
-	if (List.length(chs) = 0) then (* if no more charatcers in array*)
-		""
+	if (List.length(chs) = 0) then (* if array is empty. Fool protection*)
+		["no lexem", ""]
 	else
 		(let
 			val ch = List.nth(chs, 0);
 		in
 			(* print("\n"^String.str(ch)^"\n"); *)
 			if (ch = #" ") then
-				" " (* upper level processing to ignore spaces and tabs*)
+				["operator", " "] (* upper level processing to ignore spaces and tabs*)
 			else if (ch = #"\t") then
-				"\t"
+				["operator", "\t"] (* upper level processing to ignore spaces and tabs*)
 			else if (is_letter ch) then 
-				String.str(ch) ^ get_id_or_keyword(List.drop(chs, 1))
+				["id", String.str(ch) ^ get_id_or_keyword(List.drop(chs, 1))]
+			else if (is_digit ch) then 
+				["number", String.str(ch) ^ get_number(List.drop(chs, 1))]
 			else if (ch = #"\"") then
-				"\"" ^ get_string_literal(List.drop(chs, 1))
+				["string", "\"" ^ get_string_literal(List.drop(chs, 1))]
 			else if (ch = #"/") then
 				if (List.length(chs) > 1) then
 					if (List.nth(chs, 1) = #"*") then
-						"/*" ^ get_comment(List.drop(chs, 2))
+						(* upper level processing to ignore spaces and tabs*)
+						["comment", "/*" ^ get_comment(List.drop(chs, 2))]
 					else
-						"/"
+						["operator", "/"]
 				else
-					"/"
+					["operator", "/"]
 			else (*  any other symbols on lexical analysis are got as operators*)
-				get_operator(chs)
-
+				["operator", get_operator(chs)]
 		end)
 
 (* 
@@ -208,26 +231,36 @@ fun get_lexem(chs : char list) =
 *)
 fun get_lexems(inp, line, pos):lexem_entry list = 
 	if (List.length(inp) = 0) then (* if no more charatcers in array*)
-		(let
-			val lexem_str = get_lexem(inp);
+		[]
+		(* (let
+			val lex_item = get_lexem(inp);
+			val lex_str = List.nth(lex_item, 1);
+			val lex_type = List.nth(lex_item, 0);
 		in
-			if (lexem_str = "") then (* prevent of creating of a empty-string lexem*)
+			if (lex_str = "") then (* prevent of creating of a empty-string lexem*)
 				[]
-			else 
+			else if (ch = #"\n") then
+				[] 
+			else if (lex_str = " " orelse lex_str = "\t" orelse lex_type = "comment") then 
+				(* ignore spaces and tabs *)
+				[] @ get_lexems(new_inp, line, pos+size(lex_str))
+			else
 				(let
-					val entry:lexem_entry = {lexem = lexem_str, lexem_line = line, lexem_pos = pos};
+					val entry:lexem_entry = {lexem_type = lex_type, lexem = lex_str, lexem_line = line, lexem_pos = pos};
 				in
 					(* print("\nString: " ^ (String.implode(inp))^"\n");
 					print("\nLexem string: " ^ lexem_str^"\n");
 					print_lexems([entry]); *)
 					[entry]
 				end)
-		end)
+		end) *)
 	else
 		(let
 			val ch = List.nth(inp, 0);
-			val lexem_str = get_lexem(inp);
-			val new_inp = List.drop(inp, size(lexem_str));
+			val lex_item = get_lexem(inp);
+			val lex_str = List.nth(lex_item, 1);
+			val lex_type = List.nth(lex_item, 0);
+			val new_inp = List.drop(inp, size(lex_str));
 		in
 			(* print((Int.toString (ptr+1))^" / "^(Int.toString (List.length(inp)))^"\n");
 			print("Current: "^String.str(ch)^"\nNext: "^(String.str(next_ch)^"\n\n")); *)
@@ -236,14 +269,15 @@ fun get_lexems(inp, line, pos):lexem_entry list =
 			print("\nLexem string: " ^ lexem_str^"\n"); *)
 			if (ch = #"\n") then
 				[] @ get_lexems(new_inp, line+1, 0)
-			else if (lexem_str = " " orelse lexem_str = "\t") then (* ignore spaces and tabs *)
-				[] @ get_lexems(new_inp, line, pos+size(lexem_str))
+			else if (lex_str = " " orelse lex_str = "\t" orelse lex_type = "comment") then 
+				(* ignore spaces and tabs *)
+				[] @ get_lexems(new_inp, line, pos+size(lex_str))
 			else
 				(let
-					val entry:lexem_entry list = get_lexems(new_inp, line, pos+size(lexem_str));
+					val entry:lexem_entry list = get_lexems(new_inp, line, pos+size(lex_str));
 				in
 					(* print_lexems(entry); *)
-					{lexem = lexem_str, lexem_line = line, lexem_pos = pos}::entry
+					{lexem_type = lex_type, lexem = lex_str, lexem_line = line, lexem_pos = pos}::entry
 				end)
 			end)
 
@@ -255,3 +289,4 @@ val pureGraph =  readlist(infile);
 val f = concat_string_list(pureGraph);
 val chars = explode(f);
 val a = get_lexems(chars, 1, 1);
+val f = print_lexems(a);
