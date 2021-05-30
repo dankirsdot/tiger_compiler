@@ -3,8 +3,6 @@ type pos = int
 type ('a,'b) token = ('a,'b) Tokens.token
 type lexresult = (svalue,pos) token
 
-
-
 val lineNum = ErrorMsg.lineNum
 val linePos = ErrorMsg.linePos
 fun err(p1,p2) = ErrorMsg.error p1

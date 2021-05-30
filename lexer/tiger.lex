@@ -11,7 +11,7 @@ fun eof() = let val pos = hd(!linePos) in Tokens.EOF(pos,pos) end
 %% 
 letters=[A-Za-z];
 indentifier = [a-zA-Z][a-zA-Z0-9_]*;
-digit=[0-9];
+digit=[0-9]+;
 space=[\ \t\b\f\r];
 comment=\/\*.*\*\/;
 
@@ -68,3 +68,4 @@ comment=\/\*.*\*\/;
 {comment} => (continue());
 {space} => (continue());
 .       => (ErrorMsg.error yypos ("illegal character " ^ yytext); continue());
+

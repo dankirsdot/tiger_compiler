@@ -1,3 +1,4 @@
+fun 3 = x;
 %%
 %term
     EOF
@@ -13,7 +14,10 @@
   | FUNCTION | VAR | TYPE
   | LOWER_THAN_ELSE
 
-%nonterm  exp | program | decs | dec | tydec | vardec | fundec
+%nonterm  
+exp 
+| program 
+| decs | dec | tydec | vardec | fundec
         | typeid | ty | tyfields | lvalue | expseq | args
         | recfields 
 
@@ -30,7 +34,7 @@
 
 %prefer THEN ELSE LPAREN
 
-%right OF
+%right OFPa
 %nonassoc FUNCTION VAR TYPE THEN DO ASSIGN
 %nonassoc LOWER_THAN_ELSE
 %nonassoc ELSE

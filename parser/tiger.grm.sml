@@ -9,6 +9,7 @@ struct
 structure Header = 
 struct
 
+
 end
 structure LrTable = Token.LrTable
 structure Token = Token
