@@ -72,15 +72,15 @@ struct
           exp(e,d+1); say ")")
 
       | exp(A.IfExp{test,then',else',pos},d) =
-          (indent d; sayln "IfExp("; exp(test,d+1); sayln ",";
-          exp(then',d+1);
+          (indent d; sayln "if("; exp(test,d+1); sayln "){";
+          exp(then',d+1); sayln "}";
           case else' of NONE => ()
-            | SOME e => (sayln ","; exp(e,d+1));
-          say ")")
+            | SOME e => (sayln "else{"; exp(e,d+1) sayln "}";)
+          )
 
       | exp(A.WhileExp{test,body,pos},d) =
-          (indent d; sayln "WhileExp("; exp(test,d+1); sayln ",";
-          exp(body,d+1); say ")")
+          (indent d; sayln "while("; exp(test,d+1); sayln "){";
+          exp(body,d+1); say "}")
       | exp(A.ForExp{var=v,escape=b,lo,hi,body,pos},d) =
           (indent d; sayln "ForExp(";
           say(Symbol.name v); say ","; say(Bool.toString (!b)); sayln ",";
