@@ -1,103 +1,59 @@
-#include <string.h>
 #include <stdio.h>
-
- VarDec(N,true,NONE,
- 8)
+int main()
+{
+NANI N =  8;
  TypeDec[  (intArray,
    ArrayTy(int))]
- VarDec(row,true,NONE,
-  ArrayExp(intArray,
- N,
- N))
- VarDec(col,true,NONE,
-  ArrayExp(intArray,
- N,
- N))
- VarDec(diag1,true,NONE,
-  ArrayExp(intArray,
- N+ N- 1,
- N+ N- 1))
- VarDec(diag2,true,NONE,
-  ArrayExp(intArray,
- N+ N- 1,
- N+ N- 1))
- void printboard(){
-   int main(){    ForExp(
-i,true,
- 0,
- N- 1,
-     int main(){      ForExp(
-j,true,
- 0,
- N- 1,
-       print(        IfExp(
-            SubscriptVar(
-col,
- i)= j,
-" O",
-" ."));)
+NANI row = ArrayExp(intArray[
+ N] = 
+ N;;
+NANI col = ArrayExp(intArray[
+ N] = 
+ N;;
+NANI diag1 = ArrayExp(intArray[
+ N+ N- 1] = 
+ N+ N- 1;;
+NANI diag2 = ArrayExp(intArray[
+ N+ N- 1] = 
+ N+ N- 1;;
+  void printboard(){
+      for( int i =  0; i <=  N- 1; i++){
+          for( int j =  0; j <=  N- 1; j++){
+             print(if(            col[ i]= j){
+" O"
+        }else{
+" ."});}
       print("
-");})
+");
+}
     print("
-");}}
+");
+  }
 
- void try(   int c){
-   int main(){    IfExp(
- c= N,
-     printboard();,
-     ForExp(
-r,true,
- 0,
- N- 1,
-      IfExp(
-       IfExp(
-        IfExp(
-            SubscriptVar(
-row,
- r)= 0,
-            SubscriptVar(
-diag1,
- r+ c)= 0,
- 0),
-           SubscriptVar(
-diag2,
- r+ 7- c)= 0,
- 0),
-       int main(){        AssignExp(
-         SubscriptVar(
-row,
- r),
- 1)
-        AssignExp(
-         SubscriptVar(
-diag1,
- r+ c),
- 1)
-        AssignExp(
-         SubscriptVar(
-diag2,
- r+ 7- c),
- 1)
-        AssignExp(
-         SubscriptVar(
-col,
- c),
- r)
+  void try(int c){
+  if( c= N){
+     printboard();
+    }else{
+     for( int r =  0; r <=  N- 1; r++){
+     if(if(if(            row[ r]= 0){
+            diag1[ r+ c]= 0
+        }else{
+ 0}){
+           diag2[ r+ 7- c]= 0
+       }else{
+ 0}){
+                 row[ r] =  1;
+                 diag1[ r+ c] =  1;
+                 diag2[ r+ 7- c] =  1;
+                 col[ c] =  r;
         try( c+ 1);
-        AssignExp(
-         SubscriptVar(
-row,
- r),
- 0)
-        AssignExp(
-         SubscriptVar(
-diag1,
- r+ c),
- 0)
-        AssignExp(
-         SubscriptVar(
-diag2,
- r+ 7- c),
- 0)})))}}
+                 row[ r] =  0;
+                 diag1[ r+ c] =  0;
+                 diag2[ r+ 7- c] =  0;
 
- int main(){  try( 0);}
+      }}}
+  }
+
+  try( 0);
+  return 0;
+}

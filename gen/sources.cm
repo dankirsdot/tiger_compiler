@@ -8,7 +8,6 @@ symbol.sml
 parse.sml
 tiger.lex
 tiger.grm
-prabsyn.sml
 gen_c.sml
 $/smlnj-lib.cm
 $/ml-yacc-lib.cm
