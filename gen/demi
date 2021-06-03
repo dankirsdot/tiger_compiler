@@ -1,0 +1,17 @@
+#!/bin/bash
+if [$1 = ""]
+then
+	echo "nothing to compile"
+else
+	sml ubuntu_launch.sml $1
+	if [$2 = ""]
+	then
+		str="tig_program"
+	else
+		str=$2
+	fi
+	
+	echo "gcc compile start: "
+	gcc c_code.c -o $str
+	echo "Tiger program executable: $str"
+fi
