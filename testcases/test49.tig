@@ -2,7 +2,7 @@
 let 
 	type rectype = {name:string, id:int}
 
-	var a:=  nil
+	var a:= rectype nil
 in
 	a
 end

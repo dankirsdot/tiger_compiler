@@ -9,7 +9,6 @@ fun err(p1,p2) = ErrorMsg.error p1
 
 fun eof() = let val pos = hd(!linePos) in Tokens.EOF(pos,pos) end
 
-
 %% 
 %header (functor TigerLexFun(structure Tokens: Tiger_TOKENS));
 letters=[A-Za-z];
@@ -17,8 +16,6 @@ indentifier = [a-zA-Z][a-zA-Z0-9_]*;
 digit=[0-9];
 space=[\ \t\b\f\r];
 comment=\/\*.*\*\/;
-
-
 
 %%
 \n	=> (lineNum := !lineNum+1; linePos := yypos :: !linePos; continue());
@@ -45,7 +42,6 @@ comment=\/\*.*\*\/;
 "&"  => (Tokens.AND(yypos, yypos + 1));
 "|"  => (Tokens.OR(yypos, yypos + 1));
 ":="  => (Tokens.ASSIGN(yypos, yypos + 2));
-
 
 "var"  	=> (Tokens.VAR(yypos,yypos+3));
 "while" => (Tokens.WHILE(yypos, yypos + 5));

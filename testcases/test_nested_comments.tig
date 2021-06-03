@@ -1,0 +1,7 @@
+/* simple nested comment /* */ */
+
+/* complex nested comment /* /* */ /* */ */ */
+
+/* illegal nested comment */ */
+
+/* /* illegal nested comment */
