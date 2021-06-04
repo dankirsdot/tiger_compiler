@@ -32,7 +32,8 @@ struct
     | opname A.MinusOp = "-"
     | opname A.TimesOp = "*"
     | opname A.DivideOp = "/"
-    | opname A.EqOp = "="
+    | opname A.EqOp = "=="
+    | opname A.AssignOp = "="
     | opname A.NeqOp = "<>"
     | opname A.LtOp = "<"
     | opname A.LeOp = "<="
@@ -302,7 +303,7 @@ struct
 
             | dec(A.VarDec{name,escape,typ,init,pos},d) =
               (
-                  case typ of NONE => ( say "NANI") 
+                  case typ of NONE => ( say "auto") 
                   | SOME(s,p)=> 
                     (
                         say(Symbol.name s)

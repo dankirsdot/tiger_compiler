@@ -36,7 +36,7 @@ and ty = NameTy of symbol * pos
        | ArrayTy of symbol * pos
 
 and oper = PlusOp | MinusOp | TimesOp | DivideOp
-         | EqOp | NeqOp | LtOp | LeOp | GtOp | GeOp | AndOp | OrOp
+         | EqOp | NeqOp | LtOp | LeOp | GtOp | GeOp | AndOp | OrOp | AssignOp
 
 withtype field = {name: symbol, escape: bool ref, 
 		  typ: symbol, pos: pos}
