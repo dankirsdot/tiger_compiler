@@ -2,7 +2,6 @@ signature Tiger_TOKENS =
 sig
 type ('a,'b) token
 type svalue
-val LOWER_THAN_ELSE:  'a * 'a -> (svalue,'a) token
 val TYPE:  'a * 'a -> (svalue,'a) token
 val VAR:  'a * 'a -> (svalue,'a) token
 val FUNCTION:  'a * 'a -> (svalue,'a) token
@@ -33,7 +32,6 @@ val DIVIDE:  'a * 'a -> (svalue,'a) token
 val TIMES:  'a * 'a -> (svalue,'a) token
 val MINUS:  'a * 'a -> (svalue,'a) token
 val PLUS:  'a * 'a -> (svalue,'a) token
-val UMINUS:  'a * 'a -> (svalue,'a) token
 val DOT:  'a * 'a -> (svalue,'a) token
 val RBRACE:  'a * 'a -> (svalue,'a) token
 val LBRACE:  'a * 'a -> (svalue,'a) token

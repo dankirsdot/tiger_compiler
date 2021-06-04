@@ -1,25 +1,24 @@
 %%
 %term
-    EOF
+    EOF 
   | ID of string
-  | INT of int | STRING of string
-  | COMMA | COLON | SEMICOLON | LPAREN | RPAREN | LBRACK | RBRACK
-  | LBRACE | RBRACE | DOT
-  | UMINUS
+  | INT of int | STRING of string 
+  | COMMA | COLON | SEMICOLON | LPAREN | RPAREN | LBRACK | RBRACK 
+  | LBRACE | RBRACE | DOT 
   | PLUS | MINUS | TIMES | DIVIDE | EQ | NEQ | LT | LE | GT | GE
   | AND | OR | ASSIGN
-  | ARRAY | IF | THEN | ELSE | WHILE | FOR | TO | DO | LET | IN | END | OF
+  | ARRAY | IF | THEN | ELSE | WHILE | FOR | TO | DO | LET | IN | END | OF 
   | BREAK | NIL
-  | FUNCTION | VAR | TYPE
-  | LOWER_THAN_ELSE
+  | FUNCTION | VAR | TYPE 
 
-%nonterm  
-exp 
-| program 
-| decs | dec | tydec | vardec | fundec
-        | typeid | ty | tyfields | lvalue | expseq | args
-        | recfields 
-
+%nonterm
+    program
+  | tydec | vardec | fundec
+  | exp | expseq
+  | decs | dec 
+  | typeid | ty | tyfields
+  | lvalue | args | recfields
+          
 %pos int
 %verbose
 %start program
@@ -28,14 +27,13 @@ exp
 
 %name Tiger
 
-%keyword WHILE FOR TO BREAK LET IN END FUNCTION VAR TYPE ARRAY IF THEN ELSE
-        DO OF NIL
+%keyword WHILE FOR TO BREAK LET IN END FUNCTION VAR TYPE ARRAY IF THEN ELSE 
+	DO OF NIL
 
 %prefer THEN ELSE LPAREN
 
 %right OF
 %nonassoc FUNCTION VAR TYPE THEN DO ASSIGN
-%nonassoc LOWER_THAN_ELSE
 %nonassoc ELSE
 %left AND OR
 %nonassoc EQ NEQ LT LE GT GE
@@ -51,7 +49,7 @@ exp
 
 program	: exp ()
 
-decs :             ()
+decs : dec         ()
      | dec decs    ()
 
 dec : tydec  ()
@@ -74,11 +72,18 @@ vardec : VAR ID ASSIGN exp          ()
 fundec : FUNCTION ID LPAREN tyfields RPAREN EQ exp          ()
        | FUNCTION ID LPAREN tyfields RPAREN COLON ID EQ exp ()
 
+recfields :                           ()
+          | ID EQ exp                 ()
+          | ID EQ exp COMMA recfields ()
+
 lvalue : ID ()
        | ID LBRACK exp RBRACK ()
        | lvalue LBRACK exp RBRACK ()
        | lvalue DOT ID           ()
 
+expseq :                       ()
+       | exp                   ()
+       | exp SEMICOLON expseq  ()
 
 exp : lvalue                                ()
     | lvalue ASSIGN exp                     ()
@@ -103,16 +108,7 @@ exp : lvalue                                ()
     | ID LBRACE recfields RBRACE            ()
     | ID LBRACK exp RBRACK OF exp           ()
     | IF exp THEN exp ELSE exp              ()
-    | IF exp THEN exp %prec LOWER_THAN_ELSE ()
     | WHILE exp DO exp                      ()
     | FOR ID ASSIGN exp TO exp DO exp       ()
     | BREAK                                 ()
     | LET decs IN expseq END                ()
-
-expseq :                       ()
-       | exp                   ()
-       | exp SEMICOLON expseq  ()
-
-recfields :                           ()
-          | ID EQ exp                 ()
-          | ID EQ exp COMMA recfields ()
