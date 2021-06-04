@@ -910,7 +910,7 @@ end
  => let val  (ID as ID1) = ID1 ()
  val  (exp as exp1) = exp1 ()
  val  exp2 = exp2 ()
- in (A.ArrayExp{typ=Symbol.symbol(ID), size=exp, init=exp, pos=IDleft}
+ in (A.ArrayExp{typ=Symbol.symbol(ID), size=exp, init=exp2, pos=IDleft}
 )
 end)
  in ( LrTable.NT 0, ( result, ID1left, exp2right), rest671)

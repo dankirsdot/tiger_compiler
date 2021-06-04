@@ -205,7 +205,7 @@ struct
                     (
                         sayln "else{"; 
                         exp(e,d+1); 
-                        say "}"
+                        sayln "}"
                     )
               )
 
