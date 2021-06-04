@@ -18,6 +18,8 @@ struct
     | opname A.LeOp = "<="
     | opname A.GtOp = ">"
     | opname A.GeOp = ">="
+    | opname A.AndOp = "&"
+    | opname A.OrOp = "|"
 
   fun print (outstream, e0) =
     let fun say s =  TextIO.output(outstream,s)

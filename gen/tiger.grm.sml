@@ -878,7 +878,7 @@ end
 ANDleft, _)) :: ( _, ( MlyValue.exp exp1, exp1left, _)) :: rest671))
  => let val  result = MlyValue.exp (fn _ => let val  exp1 = exp1 ()
  val  exp2 = exp2 ()
- in (A.IfExp{test=exp1, then'=exp2, else'=NONE, pos=ANDleft})
+ in (A.OpExp{left=exp1, oper=A.AndOp, right=exp2, pos=ANDleft})
 end)
  in ( LrTable.NT 0, ( result, exp1left, exp2right), rest671)
 end
@@ -886,7 +886,7 @@ end
 ORleft, _)) :: ( _, ( MlyValue.exp exp1, exp1left, _)) :: rest671)) =>
  let val  result = MlyValue.exp (fn _ => let val  exp1 = exp1 ()
  val  exp2 = exp2 ()
- in (A.IfExp{test=exp1, then'=exp2, else'=NONE, pos=ORleft})
+ in (A.OpExp{left=exp1, oper=A.OrOp, right=exp2, pos=ORleft})
 end)
  in ( LrTable.NT 0, ( result, exp1left, exp2right), rest671)
 end

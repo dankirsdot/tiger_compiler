@@ -38,6 +38,9 @@ struct
     | opname A.LeOp = "<="
     | opname A.GtOp = ">"
     | opname A.GeOp = ">="
+    | opname A.AndOp = "&&"
+    | opname A.OrOp = "||"
+
   fun print (outstream, e0) =
       let 
           fun say s = TextIO.output(outstream,s)
@@ -106,7 +109,6 @@ struct
               )
             | var(A.SubscriptVar(v,e,p),d) = 
               (
-                  indent d; 
                   (* sayln "SubscriptVar("; *)
                   var(v,d+1); 
                   say "[";
@@ -150,8 +152,13 @@ struct
 
             | exp(A.OpExp{left,oper,right,pos},d) =
               ( 
-                  exp(left,d+1); 
-                  say(opname oper); 
+                  exp(left,d+1);
+                  say " ";
+                  (* if ("|" = (opname oper)) then
+                    say(opname oper); 
+                    say(opname oper); 
+                  else *)
+                    say(opname oper); 
                   exp(right,d+1)
               )
 
@@ -200,7 +207,7 @@ struct
                   sayln "";
                   indent d;
                   say "}";
-                  case else' of NONE => ()
+                  case else' of NONE => (sayln ""; indent d)
                   | SOME e => 
                     (
                         sayln "else{"; 
@@ -234,7 +241,8 @@ struct
                   sayln "++){";
                   indent d; 
                   exp(body,d+1);
-                  say "}"
+                  sayln "}";
+                  indent d
               )
             | exp(A.BreakExp p, d) = 
               (
