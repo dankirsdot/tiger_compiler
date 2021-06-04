@@ -257,14 +257,14 @@ struct
               )
             | exp(A.ArrayExp{typ,size,init,pos},d) =
               (
-                  indent d;
+                  (* indent d;
                   say "ArrayExp("; 
-                  say(Symbol.name typ); 
-                  sayln "[";
+                  say(Symbol.name typ);  *)
+                  say "[";
                   exp(size,d+1); 
-                  sayln "] = "; 
-                  exp(init,d+1); 
-                  say ";"
+                  say "] = {"; 
+                  exp(init,d+1);
+                  say "}"
               )
 
           and dec(A.FunctionDec l, d) = 

@@ -4,18 +4,10 @@ int main()
 auto N =  8;
  TypeDec[  (intArray,
    ArrayTy(int))]
-auto row =   ArrayExp(intArray[
- N] = 
- 0;;
-auto col =   ArrayExp(intArray[
- N] = 
- 0;;
-auto diag1 =   ArrayExp(intArray[
- N + N - 1] = 
- 0;;
-auto diag2 =   ArrayExp(intArray[
- N + N - 1] = 
- 0;;
+auto row = [ N] = { 0};
+auto col = [ N] = { 0};
+auto diag1 = [ N + N - 1] = { 0};
+auto diag2 = [ N + N - 1] = { 0};
   void printboard(){
       for( int i =  0; i <=  N - 1; i++){
           for( int j =  0; j <=  N - 1; j++){

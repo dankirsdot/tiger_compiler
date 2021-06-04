@@ -11,7 +11,7 @@ else
 		str=$2
 	fi
 	
-	# echo "gcc compile start: "
-	# gcc c_code.c -o $str
-	# echo "Tiger program executable: $str"
+	echo "gcc compile start: "
+	gcc c_code.c -o $str
+	echo "Tiger program executable: $str"
 fi
