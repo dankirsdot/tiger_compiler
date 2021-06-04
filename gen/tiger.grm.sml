@@ -886,9 +886,7 @@ end
 ORleft, _)) :: ( _, ( MlyValue.exp exp1, exp1left, _)) :: rest671)) =>
  let val  result = MlyValue.exp (fn _ => let val  exp1 = exp1 ()
  val  exp2 = exp2 ()
- in (
-A.IfExp{test=exp1, then'=A.IntExp(1), else'=SOME exp2, pos=ORleft})
-
+ in (A.IfExp{test=exp1, then'=exp2, else'=NONE, pos=ORleft})
 end)
  in ( LrTable.NT 0, ( result, exp1left, exp2right), rest671)
 end
