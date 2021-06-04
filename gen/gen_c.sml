@@ -248,14 +248,12 @@ struct
               )
             | exp(A.ArrayExp{typ,size,init,pos},d) =
               (
+                  indent d;
                   say "ArrayExp("; 
                   say(Symbol.name typ); 
                   sayln "[";
                   exp(size,d+1); 
                   sayln "] = "; 
-                  (* correct syntax needed.
-                  size and assign value is
-                  the same lexem *)
                   exp(init,d+1); 
                   say ";"
               )

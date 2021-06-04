@@ -878,9 +878,7 @@ end
 ANDleft, _)) :: ( _, ( MlyValue.exp exp1, exp1left, _)) :: rest671))
  => let val  result = MlyValue.exp (fn _ => let val  exp1 = exp1 ()
  val  exp2 = exp2 ()
- in (
-A.IfExp{test=exp1, then'=exp2, else'=SOME (A.IntExp(0)), pos=ANDleft})
-
+ in (A.IfExp{test=exp1, then'=exp2, else'=NONE, pos=ANDleft})
 end)
  in ( LrTable.NT 0, ( result, exp1left, exp2right), rest671)
 end
@@ -910,7 +908,7 @@ end
  => let val  (ID as ID1) = ID1 ()
  val  (exp as exp1) = exp1 ()
  val  exp2 = exp2 ()
- in (A.ArrayExp{typ=Symbol.symbol(ID), size=exp, init=exp2, pos=IDleft}
+ in (A.ArrayExp{typ=Symbol.symbol(ID), size=exp, init=exp, pos=IDleft}
 )
 end)
  in ( LrTable.NT 0, ( result, ID1left, exp2right), rest671)
@@ -930,7 +928,7 @@ MlyValue.exp exp1, _, _)) :: ( _, ( _, (IFleft as IF1left), _)) ::
 rest671)) => let val  result = MlyValue.exp (fn _ => let val  exp1 = 
 exp1 ()
  val  exp2 = exp2 ()
- in ( A.IfExp{test=exp1, then'=exp2, else'=NONE, pos=IFleft})
+ in (A.IfExp{test=exp1, then'=exp2, else'=NONE, pos=IFleft})
 end)
  in ( LrTable.NT 0, ( result, IF1left, exp2right), rest671)
 end
