@@ -1,0 +1,22 @@
+/* strings with escape sequences */
+var str_1 : string := "a\nb"
+var str_2 : string := "a\tb"
+var str_3 : string := "a\056b"
+var str_4 : string := "a\"b"
+var str_5 : string := "a\\b"
+
+/* strings with ignored sequences */
+var str_6 : string := "a \
+\"
+var str_7 : string := "a \
+                       \ b"
+var str_8 : string := "a \  
+
+                       \ b"
+var str_9 : string := "a \ a
+                       \ b"
+var str_10 : string := "a
+                        b/"
+var str_11 : string := "a \
+                        b"
+                        an
